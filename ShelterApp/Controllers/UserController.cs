@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShelterApp.Models;
 using ShelterApp.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShelterApp.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Policy = "User")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

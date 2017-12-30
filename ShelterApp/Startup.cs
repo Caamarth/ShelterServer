@@ -13,6 +13,9 @@ using Microsoft.EntityFrameworkCore;
 using ShelterApp.Services;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using ShelterApp.Security;
 
 namespace ShelterApp
 {
@@ -35,6 +38,42 @@ namespace ShelterApp
             services.AddScoped<IAnimalService, AnimalService>();
             services.AddScoped<IStudyService, StudyService>();
             services.AddScoped<IApplyService, ApplyService>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+
+                        ValidIssuer = "ShelterServer",
+                        ValidAudience = "ShelterApp",
+                        IssuerSigningKey = JwtSecurityKey.Create("Security key required for ShelterApp")
+                    };
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = context =>
+                        {
+                            Console.WriteLine("Authentication Failed! " + context.Exception.Message);
+                            return Task.CompletedTask;
+                        },
+                        OnTokenValidated = context =>
+                        {
+                            Console.WriteLine("Token Validated: " + context.SecurityToken);
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("User", policy => policy.RequireClaim("MembershipId"));
+            });
+
             services.AddMvc().AddJsonOptions(options => {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -52,6 +91,7 @@ namespace ShelterApp
             }
 
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
+            app.UseAuthentication();
 
             app.UseMvc();
         }

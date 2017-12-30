@@ -82,5 +82,11 @@ namespace ShelterApp.Services
                 _entityContext.SaveChanges();
             }
         }
+
+        public UserEntity getUserByName(string username)
+        {
+            var user = _entityContext.Users.FirstOrDefault(t => t.Username == username);
+            return user;
+        }
     }
 }
