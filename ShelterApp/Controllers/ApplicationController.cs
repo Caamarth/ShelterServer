@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShelterApp.Models;
 using ShelterApp.Services;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ShelterApp.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Policy = "User")]
     public class ApplicationController : Controller
     {
         private IApplyService _applyService;

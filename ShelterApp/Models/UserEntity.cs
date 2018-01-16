@@ -14,9 +14,7 @@ namespace ShelterApp.Models
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
-        [Required]
         public string Firstname { get; set; }
-        [Required]
         public string Lastname { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]

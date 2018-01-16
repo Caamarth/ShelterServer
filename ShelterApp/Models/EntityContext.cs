@@ -22,5 +22,6 @@ namespace ShelterApp.Models
         public DbSet <AnimalEntity> Animals { get; set; }
         public DbSet <Study> Studies { get; set; }
         public DbSet <Apply> Applications { get; set; }
+        public DbSet <Rating> Ratings { get; set; }
     }
 }
