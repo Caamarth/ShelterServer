@@ -12,7 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 namespace ShelterApp.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Policy = "User")]
+    //[Authorize(Policy = "User")]
+    [AllowAnonymous]
     public class AnimalController : Controller
     {
         private readonly IAnimalService _animalService;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShelterApp.Models;
 using Microsoft.EntityFrameworkCore;
+using ShelterApp.ViewModels;
 
 namespace ShelterApp.Services
 {
@@ -35,6 +36,17 @@ namespace ShelterApp.Services
 
         public void createUser(UserEntity user)
         {
+            _entityContext.Users.Add(user);
+            _entityContext.SaveChanges();
+        }
+
+        public void registerUser(RegisterModel model)
+        {
+            var user = new UserEntity
+            {
+                Username = model.Username,
+                Password = model.Password
+            };
             _entityContext.Users.Add(user);
             _entityContext.SaveChanges();
         }

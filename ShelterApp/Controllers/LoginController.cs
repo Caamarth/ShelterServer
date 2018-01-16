@@ -43,11 +43,15 @@ namespace ShelterApp.Controllers
                                 .AddIssuer("ShelterServer")
                                 .AddAudience("ShelterApp")
                                 .AddClaim("MembershipId", currentUser.Id.ToString())
-                                .AddExpiry(30)
+                                .AddExpiry(300)
                                 .Build();
 
-            //return Ok(token);
-            return Ok(token.Value);
+            var responseObject = new LoginResponseModel
+            {
+                User = currentUser,
+                Token = token.Value
+            };
+            return Ok(responseObject);
         }
     }
 }

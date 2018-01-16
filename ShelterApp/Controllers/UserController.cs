@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using ShelterApp.Models;
 using ShelterApp.Services;
 using Microsoft.AspNetCore.Authorization;
+using ShelterApp.ViewModels;
 
 namespace ShelterApp.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Policy = "User")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -21,6 +21,7 @@ namespace ShelterApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "User")]
         public IEnumerable<UserEntity> GetUsers()
         {
             var users = _userService.getUsers();
@@ -29,6 +30,7 @@ namespace ShelterApp.Controllers
 
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "User")]
         public IActionResult GetUser(int id)
         {
             var user = _userService.getUser(id);
@@ -40,6 +42,7 @@ namespace ShelterApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "User")]
         public IActionResult UpdateUser(long id, [FromBody]UserEntity user)
         {
             if (user == null)
@@ -56,6 +59,7 @@ namespace ShelterApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "User")]
         public IActionResult CreateUser([FromBody]UserEntity user)
         {
             if (user == null)
@@ -68,7 +72,20 @@ namespace ShelterApp.Controllers
             return Ok(user);
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult RegisterUser([FromBody]RegisterModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            _userService.registerUser(model);
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
+        [Authorize(Policy = "User")]
         public IActionResult DeleteUser(long id)
         {
             var user = _userService.getUser(id);

@@ -1,4 +1,5 @@
 ﻿using ShelterApp.Models;
+using ShelterApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace ShelterApp.Services
         void updateUser(long id, UserEntity user);
         void deleteUser(UserEntity user);
         UserEntity getUserByName(string username);
+        void registerUser(RegisterModel model);
     }
 }
