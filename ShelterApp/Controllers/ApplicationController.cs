@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShelterApp.Models;
 using ShelterApp.Services;
 using Microsoft.AspNetCore.Authorization;
+using ShelterApp.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -77,6 +78,28 @@ namespace ShelterApp.Controllers
                 return NotFound();
             }
             _applyService.DeleteApplication(id);
+            return Ok();
+        }
+
+        [HttpPost("rate")]
+        public IActionResult RateApplication([FromBody] RatingViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var application = _applyService.GetApplication(model.ApplyId);
+            if(application == null)
+            {
+                return NotFound();
+            }
+            var rating = new Rating
+            {
+                Id = model.Id,
+                RatingValue = model.RatingValue,
+                ApplyId = model.ApplyId
+            };
+            _applyService.RateApplication(rating);
             return Ok();
         }
     }

@@ -12,8 +12,8 @@ using System;
 namespace ShelterApp.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    [Migration("20171210125350_dateformat")]
-    partial class dateformat
+    [Migration("20180118203403_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,6 +53,8 @@ namespace ShelterApp.Migrations
 
                     b.Property<double>("Width");
 
+                    b.Property<bool>("isDeleted");
+
                     b.HasKey("Id");
 
                     b.ToTable("Animals");
@@ -67,9 +69,13 @@ namespace ShelterApp.Migrations
 
                     b.Property<int>("ApplyStatus");
 
+                    b.Property<string>("Description");
+
                     b.Property<DateTime>("PublishDate");
 
                     b.Property<int>("UserEntityId");
+
+                    b.Property<bool>("isDeleted");
 
                     b.HasKey("Id");
 
@@ -78,6 +84,22 @@ namespace ShelterApp.Migrations
                     b.HasIndex("UserEntityId");
 
                     b.ToTable("Applications");
+                });
+
+            modelBuilder.Entity("ShelterApp.Models.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ApplyId");
+
+                    b.Property<double>("RatingValue");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplyId");
+
+                    b.ToTable("Rating");
                 });
 
             modelBuilder.Entity("ShelterApp.Models.Study", b =>
@@ -114,11 +136,11 @@ namespace ShelterApp.Migrations
 
                     b.Property<string>("EmailAddress");
 
-                    b.Property<string>("Firstname")
-                        .IsRequired();
+                    b.Property<string>("Firstname");
 
-                    b.Property<string>("Lastname")
-                        .IsRequired();
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Lastname");
 
                     b.Property<string>("Password")
                         .IsRequired();
@@ -145,6 +167,14 @@ namespace ShelterApp.Migrations
                     b.HasOne("ShelterApp.Models.UserEntity", "UserEntity")
                         .WithMany("Applies")
                         .HasForeignKey("UserEntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ShelterApp.Models.Rating", b =>
+                {
+                    b.HasOne("ShelterApp.Models.Apply")
+                        .WithMany("Ratings")
+                        .HasForeignKey("ApplyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

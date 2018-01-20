@@ -13,5 +13,6 @@ namespace ShelterApp.Services
         void CreateApplication(Apply application);
         void UpdateApplicaton(int id, Apply application);
         void DeleteApplication(int id);
+        void RateApplication(Rating rating);
     }
 }

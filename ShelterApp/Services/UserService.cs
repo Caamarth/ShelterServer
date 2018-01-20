@@ -53,14 +53,16 @@ namespace ShelterApp.Services
 
         public void deleteUser(UserEntity user)
         {
-            _entityContext.Remove(user);
+            var deletingUser = user;
+            deletingUser.IsDeleted = true;
+            _entityContext.Users.Update(deletingUser);
             _entityContext.SaveChanges();
 
         }
 
         public UserEntity getUser(long id)
         {
-            var user = _entityContext.Users.FirstOrDefault(x => x.Id == id);
+            var user = _entityContext.Users.FirstOrDefault(x => x.Id == id && x.IsDeleted != true);
 
             user.Applies = _entityContext.Applications.Where(x => x.UserEntityId == id).ToList();
 
@@ -71,7 +73,7 @@ namespace ShelterApp.Services
         public IEnumerable<UserEntity> getUsers()
         {
             return _entityContext.Users
-                .Include(user => user.Applies);
+                .Include(user => user.Applies).Where(x => x.IsDeleted != true);
         }
 
         public void updateUser(long id, UserEntity user)
@@ -97,7 +99,7 @@ namespace ShelterApp.Services
 
         public UserEntity getUserByName(string username)
         {
-            var user = _entityContext.Users.FirstOrDefault(t => t.Username == username);
+            var user = _entityContext.Users.FirstOrDefault(t => t.Username == username && t.IsDeleted != true);
             return user;
         }
     }

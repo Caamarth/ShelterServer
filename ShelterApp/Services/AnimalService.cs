@@ -48,14 +48,15 @@ namespace ShelterApp.Services
             var animal = _entityContext.Animals.FirstOrDefault(x => x.Id == id);
             if (animal != null)
             {
-                _entityContext.Animals.Remove(animal);
+                animal.isDeleted = true;
+                _entityContext.Animals.Update(animal);
                 _entityContext.SaveChanges();
             }
         }
 
         public AnimalEntity getAnimal(long id)
         {
-            var animal = _entityContext.Animals.FirstOrDefault(x => x.Id == id);
+            var animal = _entityContext.Animals.FirstOrDefault(x => x.Id == id && x.isDeleted != true);
             animal.Applications = _entityContext.Applications.Where(x => x.AnimalEntityId == id).ToList();
             return animal;
         }
@@ -63,7 +64,7 @@ namespace ShelterApp.Services
         public IEnumerable<AnimalEntity> getAnimals()
         {
             return _entityContext.Animals
-                .Include(animal => animal.Applications);
+                .Include(animal => animal.Applications).Where(x => x.isDeleted != true);
         }
 
         public void UpdateAnimal(AnimalEntity animal)

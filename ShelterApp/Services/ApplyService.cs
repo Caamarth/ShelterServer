@@ -41,14 +41,16 @@ namespace ShelterApp.Services
             var application = _entityContext.Applications.FirstOrDefault(x => x.Id == id);
             if (application != null)
             {
-                _entityContext.Applications.Remove(application);
+                application.isDeleted = true;
+                _entityContext.Applications.Update(application);
                 _entityContext.SaveChanges();
             }
         }
 
         public Apply GetApplication(int id)
         {
-            var application = _entityContext.Applications.FirstOrDefault(x => x.Id == id);
+            var application = _entityContext.Applications.Include(apply => apply.Ratings)
+                .FirstOrDefault(x => x.Id == id && x.isDeleted != true);
 
             application.Studies = _entityContext.Studies
                 .Where(x => x.ApplyId == id).ToList();
@@ -65,10 +67,11 @@ namespace ShelterApp.Services
 
         public IEnumerable<Apply> GetApplications()
         {
-            return _entityContext.Applications
+            return _entityContext.Applications.Where(x => x.isDeleted != true)
                 .Include(apply => apply.Studies)
                 .Include(apply => apply.UserEntity)
-                .Include(apply => apply.AnimalEntity);
+                .Include(apply => apply.AnimalEntity)
+                .Include(apply => apply.Ratings);
         }
 
         public void UpdateApplicaton(int id, Apply application)
@@ -83,6 +86,12 @@ namespace ShelterApp.Services
                 apply.AnimalEntityId = application.AnimalEntityId;
             }
             _entityContext.Applications.Update(apply);
+            _entityContext.SaveChanges();
+        }
+
+        public void RateApplication(Rating rating)
+        {
+            _entityContext.Ratings.Add(rating);
             _entityContext.SaveChanges();
         }
     }

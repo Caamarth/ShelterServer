@@ -52,6 +52,8 @@ namespace ShelterApp.Migrations
 
                     b.Property<double>("Width");
 
+                    b.Property<bool>("isDeleted");
+
                     b.HasKey("Id");
 
                     b.ToTable("Animals");
@@ -72,6 +74,8 @@ namespace ShelterApp.Migrations
 
                     b.Property<int>("UserEntityId");
 
+                    b.Property<bool>("isDeleted");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AnimalEntityId");
@@ -86,11 +90,11 @@ namespace ShelterApp.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ApplicationId");
+                    b.Property<int>("ApplyId");
 
-                    b.Property<int?>("ApplyId");
+                    b.Property<double>("RatingValue");
 
-                    b.Property<int>("RatingValue");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -135,6 +139,8 @@ namespace ShelterApp.Migrations
 
                     b.Property<string>("Firstname");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("Lastname");
 
                     b.Property<string>("Password")
@@ -169,7 +175,8 @@ namespace ShelterApp.Migrations
                 {
                     b.HasOne("ShelterApp.Models.Apply")
                         .WithMany("Ratings")
-                        .HasForeignKey("ApplyId");
+                        .HasForeignKey("ApplyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ShelterApp.Models.Study", b =>

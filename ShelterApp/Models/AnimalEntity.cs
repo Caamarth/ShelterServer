@@ -30,6 +30,8 @@ namespace ShelterApp.Models
         public string Description { get; set; }
         public AnimalClassification Classification { get; set; }
 
+        public bool isDeleted {get; set;}
+
         public ICollection<Apply> Applications { get; set; }
     }
 }

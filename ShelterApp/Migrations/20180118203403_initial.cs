@@ -26,7 +26,8 @@ namespace ShelterApp.Migrations
                     RaceType = table.Column<int>(nullable: false),
                     Sex = table.Column<int>(nullable: false),
                     Weight = table.Column<double>(nullable: false),
-                    Width = table.Column<double>(nullable: false)
+                    Width = table.Column<double>(nullable: false),
+                    isDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,8 +43,9 @@ namespace ShelterApp.Migrations
                     Address = table.Column<string>(nullable: true),
                     Birthdate = table.Column<DateTime>(nullable: false),
                     EmailAddress = table.Column<string>(nullable: true),
-                    Firstname = table.Column<string>(nullable: false),
-                    Lastname = table.Column<string>(nullable: false),
+                    Firstname = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Lastname = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: false),
                     PhoneNumber = table.Column<string>(nullable: true),
                     Role = table.Column<string>(nullable: true),
@@ -62,8 +64,10 @@ namespace ShelterApp.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AnimalEntityId = table.Column<int>(nullable: false),
                     ApplyStatus = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
                     PublishDate = table.Column<DateTime>(nullable: false),
-                    UserEntityId = table.Column<int>(nullable: false)
+                    UserEntityId = table.Column<int>(nullable: false),
+                    isDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,6 +82,26 @@ namespace ShelterApp.Migrations
                         name: "FK_Applications_Users_UserEntityId",
                         column: x => x.UserEntityId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rating",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ApplyId = table.Column<int>(nullable: false),
+                    RatingValue = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rating", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rating_Applications_ApplyId",
+                        column: x => x.ApplyId,
+                        principalTable: "Applications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -116,6 +140,11 @@ namespace ShelterApp.Migrations
                 column: "UserEntityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Rating_ApplyId",
+                table: "Rating",
+                column: "ApplyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Studies_ApplyId",
                 table: "Studies",
                 column: "ApplyId");
@@ -123,6 +152,9 @@ namespace ShelterApp.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Rating");
+
             migrationBuilder.DropTable(
                 name: "Studies");
 

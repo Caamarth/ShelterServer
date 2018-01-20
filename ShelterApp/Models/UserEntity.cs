@@ -24,6 +24,8 @@ namespace ShelterApp.Models
         public string PhoneNumber { get; set; }
         public string Role { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public ICollection<Apply> Applies { get; set; }
     }
 }
