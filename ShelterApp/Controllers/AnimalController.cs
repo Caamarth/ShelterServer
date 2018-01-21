@@ -69,7 +69,7 @@ namespace ShelterApp.Controllers
                 return NotFound();
             }
             _animalService.UpdateAnimal(animal);
-            return Ok();
+            return Ok(animal);
             
         }
 
