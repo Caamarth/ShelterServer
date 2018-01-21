@@ -86,7 +86,8 @@ namespace ShelterApp.Services
                 todo.Username = user.Username;
                 todo.Password = user.Password;
                 todo.Firstname = user.Firstname;
-                todo.Password = user.Password;
+                todo.Lastname = user.Lastname;
+                todo.Address = user.Address;
                 todo.EmailAddress = user.EmailAddress;
                 todo.Birthdate = user.Birthdate;
                 todo.PhoneNumber = user.PhoneNumber;
