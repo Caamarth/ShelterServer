@@ -41,7 +41,7 @@ namespace ShelterApp.Services
             var application = _entityContext.Applications.FirstOrDefault(x => x.Id == id);
             if (application != null)
             {
-                application.isDeleted = true;
+                application.IsDeleted = true;
                 _entityContext.Applications.Update(application);
                 _entityContext.SaveChanges();
             }
@@ -50,7 +50,7 @@ namespace ShelterApp.Services
         public Apply GetApplication(int id)
         {
             var application = _entityContext.Applications.Include(apply => apply.Ratings)
-                .FirstOrDefault(x => x.Id == id && x.isDeleted != true);
+                .FirstOrDefault(x => x.Id == id && x.IsDeleted != true);
 
             application.Studies = _entityContext.Studies
                 .Where(x => x.ApplyId == id).ToList();
@@ -67,7 +67,7 @@ namespace ShelterApp.Services
 
         public IEnumerable<Apply> GetApplications()
         {
-            return _entityContext.Applications.Where(x => x.isDeleted != true)
+            return _entityContext.Applications.Where(x => x.IsDeleted != true)
                 .Include(apply => apply.Studies)
                 .Include(apply => apply.UserEntity)
                 .Include(apply => apply.AnimalEntity)

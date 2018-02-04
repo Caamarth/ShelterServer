@@ -40,15 +40,17 @@ namespace ShelterApp.Services
             _entityContext.SaveChanges();
         }
 
-        public void registerUser(RegisterModel model)
+        public UserEntity registerUser(RegisterModel model)
         {
             var user = new UserEntity
             {
                 Username = model.Username,
-                Password = model.Password
+                Password = model.Password,
+                Role = "User"
             };
             _entityContext.Users.Add(user);
             _entityContext.SaveChanges();
+            return user;
         }
 
         public void deleteUser(UserEntity user)

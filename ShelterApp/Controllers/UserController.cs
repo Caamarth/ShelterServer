@@ -36,7 +36,7 @@ namespace ShelterApp.Controllers
             var user = _userService.getUser(id);
             if (user == null)
             {
-                return NotFound();
+                return NotFound("Sikertelen művelet!");
             }
             return new ObjectResult(user);
         }
@@ -64,7 +64,7 @@ namespace ShelterApp.Controllers
         {
             if (user == null)
             {
-                return BadRequest();
+                return BadRequest("Sikertelen létrehozás!");
             }
 
             _userService.createUser(user);
@@ -78,10 +78,10 @@ namespace ShelterApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest("Siekrtelen regisztráció!");
             }
-            _userService.registerUser(model);
-            return Ok();
+            var user = _userService.registerUser(model);
+            return Ok(user);
         }
 
         [HttpDelete("{id}")]
@@ -91,12 +91,12 @@ namespace ShelterApp.Controllers
             var user = _userService.getUser(id);
             if(user == null)
             {
-                return NotFound();
+                return NotFound("Nincs ilyen felhasználó az adatbázisban!");
             }
 
             _userService.deleteUser(user);
 
-            return Ok();
+            return Ok(user);
         }
     }
 }

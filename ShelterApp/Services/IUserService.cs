@@ -15,6 +15,6 @@ namespace ShelterApp.Services
         void updateUser(long id, UserEntity user);
         void deleteUser(UserEntity user);
         UserEntity getUserByName(string username);
-        void registerUser(RegisterModel model);
+        UserEntity registerUser(RegisterModel model);
     }
 }

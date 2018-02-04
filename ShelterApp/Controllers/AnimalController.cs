@@ -7,8 +7,6 @@ using ShelterApp.Services;
 using ShelterApp.Models;
 using Microsoft.AspNetCore.Authorization;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace ShelterApp.Controllers
 {
     [Route("api/[controller]")]
@@ -83,7 +81,7 @@ namespace ShelterApp.Controllers
                 return NotFound();
             }
             _animalService.DeleteAnimal(id);
-            return Ok();
+            return Ok(id);
         }
     }
 }

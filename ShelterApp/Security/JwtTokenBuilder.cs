@@ -15,7 +15,7 @@ namespace ShelterApp.Security
         private string issuer = "";
         private string audience = "";
         private Dictionary<string, string> claims = new Dictionary<string, string>();
-        private int expiryInMinutes = 30;
+        private int expiryInMinutes = 300;
 
         public JwtTokenBuilder AddSecurityKey(SecurityKey securityKey)
         {

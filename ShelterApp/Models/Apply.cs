@@ -1,4 +1,6 @@
-﻿using ShelterApp.Enums;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using ShelterApp.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +26,7 @@ namespace ShelterApp.Models
         public int AnimalEntityId { get; set; }
         public AnimalEntity AnimalEntity { get; set; }
 
-        public bool isDeleted { get; set; }
+        public bool IsDeleted { get; set; }
 
         public ICollection<Study> Studies { get; set; }
         public ICollection<Rating> Ratings { get; set; }
