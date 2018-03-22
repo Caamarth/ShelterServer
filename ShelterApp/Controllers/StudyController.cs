@@ -7,8 +7,6 @@ using ShelterApp.Services;
 using ShelterApp.Models;
 using Microsoft.AspNetCore.Authorization;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace ShelterApp.Controllers
 {
     [Route("api/[controller]")]
@@ -71,7 +69,7 @@ namespace ShelterApp.Controllers
             }
             _studyService.UpdateStudy(id, study);
 
-            return Ok();
+            return Ok(study);
         }
 
         // DELETE api/values/5
@@ -85,7 +83,7 @@ namespace ShelterApp.Controllers
             }
             _studyService.DeleteStudy(id);
 
-            return Ok();
+            return Ok(id);
         }
     }
 }

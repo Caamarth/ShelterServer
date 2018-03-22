@@ -30,6 +30,12 @@ namespace ShelterApp.Controllers
             return applications;
         }
 
+        [HttpGet("user/{id}")]
+        public IEnumerable<Apply> GetApplicationsForUser(int id)
+        {
+            return _applyService.GetApplicationsForUser(id);
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public IActionResult GetApplication(int id)
@@ -64,7 +70,7 @@ namespace ShelterApp.Controllers
                 return NotFound();
             }
             _applyService.UpdateApplicaton(id, application);
-            return Ok();
+            return Ok(application);
         }
 
         // DELETE api/values/5
@@ -77,7 +83,7 @@ namespace ShelterApp.Controllers
                 return NotFound();
             }
             _applyService.DeleteApplication(id);
-            return Ok();
+            return Ok(id);
         }
     }
 }

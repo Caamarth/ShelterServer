@@ -81,7 +81,7 @@ namespace ShelterApp.Controllers
                 return BadRequest();
             }
             _userService.registerUser(model);
-            return Ok();
+            return Ok(model);
         }
 
         [HttpDelete("{id}")]
@@ -96,7 +96,7 @@ namespace ShelterApp.Controllers
 
             _userService.deleteUser(user);
 
-            return Ok();
+            return Ok(user);
         }
     }
 }

@@ -71,6 +71,14 @@ namespace ShelterApp.Services
                 .Include(apply => apply.AnimalEntity);
         }
 
+        public IEnumerable<Apply> GetApplicationsForUser(int id)
+        {
+            return _entityContext.Applications.Where(x => x.UserEntityId == id)
+               .Include(apply => apply.Studies)
+               .Include(apply => apply.UserEntity)
+               .Include(apply => apply.AnimalEntity);
+        }
+
         public void UpdateApplicaton(int id, Apply application)
         {
             var apply = _entityContext.Applications.FirstOrDefault(x => x.Id == id);
