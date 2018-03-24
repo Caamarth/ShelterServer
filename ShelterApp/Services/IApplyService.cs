@@ -1,4 +1,5 @@
 ﻿using ShelterApp.Models;
+using ShelterApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace ShelterApp.Services
         IEnumerable<Apply> GetApplications();
         IEnumerable<Apply> GetApplicationsForUser(int id);
         Apply GetApplication(int id);
-        void CreateApplication(Apply application);
+        void CreateApplication(ApplicationCreateDTO application);
         void UpdateApplicaton(int id, Apply application);
         void DeleteApplication(int id);
     }

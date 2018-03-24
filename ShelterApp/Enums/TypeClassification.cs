@@ -11,6 +11,7 @@ namespace ShelterApp.Enums
         Madár = 1,
         Rágcsáló = 2,
         Hüllő = 3,
-        Kétéltű = 4
+        Kétéltű = 4,
+        Vízi = 5
     }
 }

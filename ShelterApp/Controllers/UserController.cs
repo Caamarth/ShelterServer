@@ -72,7 +72,7 @@ namespace ShelterApp.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         [AllowAnonymous]
         public IActionResult RegisterUser([FromBody]RegisterModel model)
         {

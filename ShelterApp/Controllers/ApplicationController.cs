@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShelterApp.Models;
 using ShelterApp.Services;
 using Microsoft.AspNetCore.Authorization;
+using ShelterApp.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -50,9 +51,9 @@ namespace ShelterApp.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult CreateApplication([FromBody]Apply application)
+        public IActionResult CreateApplication([FromBody]ApplicationCreateDTO application)
         {
-            if (application == null)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }

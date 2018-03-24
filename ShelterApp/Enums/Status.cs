@@ -11,6 +11,7 @@ namespace ShelterApp.Enums
         UnderInvestigation = 1,
         NeedMoreInfo = 2,
         Refused = 3,
-        Accepted = 4
+        Accepted = 4,
+        Cancelled = 5
     }
 }

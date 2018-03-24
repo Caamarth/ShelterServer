@@ -10,6 +10,7 @@ namespace ShelterApp.Services
     {
         IEnumerable<Study> GetStudies();
         Study GetStudy(long id);
+        IEnumerable<Study> GetStudiesForApplication(int id);
         void CreateStudy(Study study);
         void UpdateStudy(long id, Study study);
         void DeleteStudy(long id);

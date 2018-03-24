@@ -64,6 +64,12 @@ namespace ShelterApp.Services
             return study;
         }
 
+        public IEnumerable<Study> GetStudiesForApplication(int id)
+        {
+            var studies = _entityContext.Studies.Where(x => x.ApplyId == id);
+            return studies;
+        }
+
         public void UpdateStudy(long id, Study study)
         {
             var updatedStudy = _entityContext.Studies.FirstOrDefault(x => x.Id == id);

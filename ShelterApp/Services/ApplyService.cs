@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ShelterApp.Models;
 using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
+using ShelterApp.ViewModels;
 
 namespace ShelterApp.Services
 {
@@ -27,11 +28,22 @@ namespace ShelterApp.Services
                 _entityContext.SaveChanges();
             }
         }
-        public void CreateApplication(Apply application)
+        public void CreateApplication(ApplicationCreateDTO application)
         {
+            var user = _entityContext.Users.FirstOrDefault(x => x.Id == application.UserId);
+            var animal = _entityContext.Animals.FirstOrDefault(x => x.Id == application.AnimalId);
+            var apply = new Apply
+            {
+                PublishDate = DateTime.Now,
+                ApplyStatus = Enums.Status.SentIn,
+                UserEntityId = user.Id,
+                AnimalEntityId = animal.Id,
+                Description = application.Description
+            };
+
             if (application != null)
             {
-                _entityContext.Applications.Add(application);
+                _entityContext.Applications.Add(apply);
                 _entityContext.SaveChanges();
             }
         }

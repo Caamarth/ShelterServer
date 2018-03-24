@@ -15,10 +15,12 @@ namespace ShelterApp.Controllers
     {
 
         private IStudyService _studyService;
+        private IApplyService _applyService;
 
-        public StudyController (IStudyService studyService)
+        public StudyController (IStudyService studyService, IApplyService applyService)
         {
             _studyService = studyService;
+            _applyService = applyService;
         }
 
         // GET: api/values
@@ -39,6 +41,19 @@ namespace ShelterApp.Controllers
                 return NotFound();
             }
             return new ObjectResult(study);
+        }
+
+        [HttpGet("application/{id}")]
+        public IActionResult GetStudyForApplication(int id)
+        {
+            var application = _applyService.GetApplication(id);
+            if (application == null)
+            {
+                return NotFound("Nem sikerült megtalálni az igénylést!");
+            }
+
+            var studies = _studyService.GetStudiesForApplication(id);
+            return Ok(studies);
         }
 
         // POST api/values
