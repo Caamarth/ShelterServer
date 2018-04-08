@@ -13,5 +13,7 @@ namespace ShelterApp.Services
         void CreateAnimal(AnimalEntity animal);
         void UpdateAnimal(AnimalEntity animal);
         void DeleteAnimal(long id);
+        ICollection<AnimalImages> GetAnimalImages(int animalId);
+        void SaveImages(AnimalImages images);
     }
 }

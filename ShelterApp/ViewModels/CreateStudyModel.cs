@@ -2,20 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShelterApp.Models
+namespace ShelterApp.ViewModels
 {
-    public class Study
+    public class CreateStudyModel
     {
-        public int Id { get; set; }
-        [Required]
         public string Title { get; set; } //Ügyiratszám
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime PublishDate { get; set; } //Dátum
         public string Description { get; set; } //Vélemény
         public double Rating { get; set; } //Értékelés
 
@@ -30,6 +24,5 @@ namespace ShelterApp.Models
         public Clean CleanLevel { get; set; }
 
         public int ApplyId { get; set; }
-        public Apply Apply { get; set; }
     }
 }

@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using ShelterApp.Security;
+using System.Data.SqlClient;
 
 namespace ShelterApp
 {
@@ -96,10 +97,26 @@ namespace ShelterApp
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseAuthentication();
             app.UseCors("shelterapp");
 
             app.UseMvc();
+
+            var scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<EntityContext>();
+
+                try
+                {
+                    context.Database.Migrate();
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine("Database exists. Continuing...");
+                }
+            }
         }
     }
 }

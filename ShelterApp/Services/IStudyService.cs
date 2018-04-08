@@ -1,4 +1,5 @@
 ﻿using ShelterApp.Models;
+using ShelterApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace ShelterApp.Services
         IEnumerable<Study> GetStudies();
         Study GetStudy(long id);
         IEnumerable<Study> GetStudiesForApplication(int id);
-        void CreateStudy(Study study);
+        void CreateStudy(CreateStudyModel study);
         void UpdateStudy(long id, Study study);
         void DeleteStudy(long id);
     }

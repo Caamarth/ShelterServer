@@ -12,8 +12,8 @@ using System;
 namespace ShelterApp.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    [Migration("20180116172749_ratings")]
-    partial class ratings
+    [Migration("20180408152759_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,6 +56,20 @@ namespace ShelterApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Animals");
+                });
+
+            modelBuilder.Entity("ShelterApp.Models.AnimalImages", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AnimalId");
+
+                    b.Property<string>("AnimalImgs");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Imgs");
                 });
 
             modelBuilder.Entity("ShelterApp.Models.Apply", b =>
@@ -107,11 +121,27 @@ namespace ShelterApp.Migrations
 
                     b.Property<int>("ApplyId");
 
+                    b.Property<int>("CleanLevel");
+
+                    b.Property<int>("ComfortLevel");
+
                     b.Property<string>("Description");
+
+                    b.Property<int>("HabitabilityLevel");
+
+                    b.Property<int>("HomeTypeLevel");
+
+                    b.Property<int>("NumberOfAnimals");
+
+                    b.Property<int>("NumberOfPeople");
+
+                    b.Property<int>("NumberOfRooms");
 
                     b.Property<DateTime>("PublishDate");
 
                     b.Property<double>("Rating");
+
+                    b.Property<double>("Size");
 
                     b.Property<string>("Title")
                         .IsRequired();

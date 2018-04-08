@@ -57,6 +57,20 @@ namespace ShelterApp.Migrations
                     b.ToTable("Animals");
                 });
 
+            modelBuilder.Entity("ShelterApp.Models.AnimalImages", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AnimalId");
+
+                    b.Property<string>("AnimalImgs");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Imgs");
+                });
+
             modelBuilder.Entity("ShelterApp.Models.Apply", b =>
                 {
                     b.Property<int>("Id")
@@ -106,11 +120,27 @@ namespace ShelterApp.Migrations
 
                     b.Property<int>("ApplyId");
 
+                    b.Property<int>("CleanLevel");
+
+                    b.Property<int>("ComfortLevel");
+
                     b.Property<string>("Description");
+
+                    b.Property<int>("HabitabilityLevel");
+
+                    b.Property<int>("HomeTypeLevel");
+
+                    b.Property<int>("NumberOfAnimals");
+
+                    b.Property<int>("NumberOfPeople");
+
+                    b.Property<int>("NumberOfRooms");
 
                     b.Property<DateTime>("PublishDate");
 
                     b.Property<double>("Rating");
+
+                    b.Property<double>("Size");
 
                     b.Property<string>("Title")
                         .IsRequired();

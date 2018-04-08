@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShelterApp.Services;
 using ShelterApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using ShelterApp.ViewModels;
 
 namespace ShelterApp.Controllers
 {
@@ -58,7 +59,7 @@ namespace ShelterApp.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult CreateStudy([FromBody]Study study)
+        public IActionResult CreateStudy([FromBody]CreateStudyModel study)
         {
             if (study == null)
             {

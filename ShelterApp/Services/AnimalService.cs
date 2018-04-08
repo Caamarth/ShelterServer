@@ -43,6 +43,17 @@ namespace ShelterApp.Services
             _entityContext.SaveChanges();
         }
 
+        public ICollection<AnimalImages> GetAnimalImages(int animalId)
+        {
+            return _entityContext.Imgs.Where(x => x.AnimalId == animalId).ToList();
+        }
+
+        public void SaveImages(AnimalImages images)
+        {
+            _entityContext.Imgs.Update(images);
+            _entityContext.SaveChanges();
+        }
+
         public void DeleteAnimal(long id)
         {
             var animal = _entityContext.Animals.FirstOrDefault(x => x.Id == id);

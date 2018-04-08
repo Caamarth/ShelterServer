@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShelterApp.Services;
 using ShelterApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -71,6 +72,39 @@ namespace ShelterApp.Controllers
             _animalService.UpdateAnimal(animal);
             return Ok(animal);
             
+        }
+
+        [HttpPost("images/{id}")]
+        public IActionResult UploadPictures(int id, [FromBody]string[] images)
+        {
+            if (images == null)
+            {
+                return BadRequest("No file uploaded");
+            }
+
+            foreach (var img in images)
+            {
+                var imageEntity = new AnimalImages
+                {
+                    AnimalId = id,
+                    AnimalImgs = img
+                };
+                _animalService.SaveImages(imageEntity);
+            }
+
+            return Ok(images);
+        }
+
+        [HttpGet("images/{id}")]
+        public IActionResult GetImages(int id)
+        {
+            var images = _animalService.GetAnimalImages(id);
+            if (images == null)
+            {
+                return NotFound("Nem találhatóak képek!");
+            }
+
+            return Ok(images);
         }
 
         // DELETE api/values/5

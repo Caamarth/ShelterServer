@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShelterApp.Models;
 using Microsoft.EntityFrameworkCore;
+using ShelterApp.ViewModels;
 
 namespace ShelterApp.Services
 {
@@ -30,11 +31,29 @@ namespace ShelterApp.Services
 
         }
 
-        public void CreateStudy(Study study)
+        public void CreateStudy(CreateStudyModel study)
         {
             if (study != null)
             {
-                _entityContext.Studies.Add(study);
+                var newStudy = new Study
+                {
+                    Title = study.Title,
+                    PublishDate = DateTime.Now,
+                    Rating = study.Rating,
+                    Size = study.Size,
+                    NumberOfRooms = study.NumberOfRooms,
+                    NumberOfPeople = study.NumberOfPeople,
+                    NumberOfAnimals = study.NumberOfAnimals,
+                    HomeTypeLevel = study.HomeTypeLevel,
+                    ComfortLevel = study.ComfortLevel,
+                    HabitabilityLevel = study.HabitabilityLevel,
+                    CleanLevel = study.CleanLevel,
+                    Description = study.Description,
+                    ApplyId = study.ApplyId
+            };
+
+
+                _entityContext.Studies.Add(newStudy);
                 _entityContext.SaveChanges();
             }
         }
@@ -51,8 +70,8 @@ namespace ShelterApp.Services
 
         public IEnumerable<Study> GetStudies()
         {
-            return _entityContext.Studies.Include(
-                study => study.Apply);
+            return _entityContext.Studies
+                .Include(study => study.Apply);
         }
 
         public Study GetStudy(long id)
@@ -77,6 +96,16 @@ namespace ShelterApp.Services
             {
                 updatedStudy.Title = study.Title;
                 updatedStudy.PublishDate = study.PublishDate;
+
+                updatedStudy.NumberOfRooms = study.NumberOfRooms;
+                updatedStudy.NumberOfPeople = study.NumberOfPeople;
+                updatedStudy.NumberOfAnimals = study.NumberOfAnimals;
+                updatedStudy.HomeTypeLevel = study.HomeTypeLevel;
+                updatedStudy.ComfortLevel = study.ComfortLevel;
+                updatedStudy.HabitabilityLevel = study.HabitabilityLevel;
+                updatedStudy.CleanLevel = study.CleanLevel;
+                updatedStudy.Size = study.Size;
+
                 updatedStudy.Description = study.Description;
                 updatedStudy.Rating = study.Rating;
                 updatedStudy.ApplyId = study.ApplyId;
